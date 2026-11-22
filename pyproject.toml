@@ -20,6 +20,7 @@ dependencies = []
 Homepage = "https://github.com/lexsysko/bind-zone-sync"
 Repository = "https://github.com/lexsysko/bind-zone-sync.git"
 Issues = "https://github.com/lexsysko/bind-zone-sync/issues"
+PyPi = "https://pypi.org/project/bind-zone-sync/"
 
 [project.scripts]
 bind-zone-sync = "bind_zone_sync.bind_zone_sync:main"
