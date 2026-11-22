@@ -3,9 +3,21 @@ name = "bind-zone-sync"
 version = "0.2.0"
 description = "Sync BIND zone configs between primary and secondary servers"
 readme = "README.md"
+license = { text = "MIT" }
+license-files = ["LICEN[CS]E*"]
+keywords = ["python", "configuration", "python-script", "configuration-management", "bind", "named", "bind9"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
 authors = [
     { name = "Lex SysKo", email = "lexsys.ko@gmail.com" }
 ]
+[project.urls]
+Homepage = "https://github.com/lexsysko/bind-zone-sync"
+Repository = "https://github.com/lexsysko/bind-zone-sync.git"
+Issues = "https://github.com/lexsysko/bind-zone-sync/issues"
+
 requires-python = ">=3.12"
 dependencies = []
 
