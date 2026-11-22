@@ -1,15 +1,19 @@
-
 # bind-zone-sync
 
-Manage BIND zone configuration files: generate secondary-zone configs from primary-zone configs, and convert secondary configs back to primary configs.
+Manage BIND zone configuration files: generate secondary-zone configs from primary-zone configs, and convert secondary configs
+back to primary configs.
 
 ## Features
 
-- **`gen`** — Read a primary zone config and produce a secondary zone config, preserving the original multi-line formatting, blank lines, indentation, and comments.
-- **`restore`** — Convert a secondary zone config back to a primary zone config, removing the `primaries` directive and restoring `type primary`.
-- **`directory` directive preservation** — If the input config uses a `directory` directive with relative file paths, the output preserves the directive and keeps paths relative.
+- **`gen`** — Read a primary zone config and produce a secondary zone config, preserving the original multi-line formatting, blank
+  lines, indentation, and comments.
+- **`restore`** — Convert a secondary zone config back to a primary zone config, removing the `primaries` directive and restoring
+  `type primary`.
+- **`directory` directive preservation** — If the input config uses a `directory` directive with relative file paths, the output
+  preserves the directive and keeps paths relative.
 - **DB path substitution** — Automatically rewrite zone file paths (e.g., `primary/` → `secondary/`) during conversion.
-- **Custom primaries content** — The `--primaries` option accepts any string for the `primaries` directive, supporting multiple IPs, TSIG keys, or global settings.
+- **Custom primaries content** — The `--primaries` option accepts any string for the `primaries` directive, supporting multiple
+  IPs, TSIG keys, or global settings.
 
 ## Installation
 
@@ -17,7 +21,25 @@ Manage BIND zone configuration files: generate secondary-zone configs from prima
 pip install bind-zone-sync
 # or
 uv run bind-zone-sync --help
+# or
+uvx bind-zone-sync --help
 ```
+
+### Standalone Usage (No Installation Required)
+
+The `bind_zone_sync.py` script is self-contained and uses only Python standard library modules. You can copy it to any location
+and run it directly without installing the package:
+
+```bash 
+# Download or copy the script
+curl -o bind_zone_sync.py https://raw.githubusercontent.com/lexsysko/bind-zone-sync/main/src/bind_zone_sync/bind_zone_sync.py
+
+# Run directly with Python
+python bind_zone_sync.py gen --conf zones-primary.conf --out zones-secondary.conf
+python bind_zone_sync.py restore --conf zones-secondary.conf --out zones-primary.conf
+```
+
+This is useful when you don't have pip/uv available or want a quick one-off conversion without setting up a Python environment.
 
 ## Usage
 
@@ -30,6 +52,7 @@ bind-zone-sync gen --conf zones-primary.conf --out zones-secondary.conf
 ```
 
 Each zone block is transformed:
+
 - `type primary` → `type secondary`
 - `primaries { <address>; };` directive is added after the type line
 - All other directives (allow-query, file, etc.) are preserved as-is
@@ -43,7 +66,8 @@ bind-zone-sync gen --conf zones-primary.conf --out zones-secondary.conf \
   --db-path-replace /usr/local/etc/namedb/secondary/
 ```
 
-This changes file paths like `/usr/local/etc/namedb/primary/app1.example.net.db` to `/usr/local/etc/namedb/secondary/app1.example.net.db`.
+This changes file paths like `/usr/local/etc/namedb/primary/app1.example.net.db` to
+`/usr/local/etc/namedb/secondary/app1.example.net.db`.
 
 **With custom primaries content:**
 
@@ -70,6 +94,7 @@ bind-zone-sync restore --conf zones-secondary.conf --out zones-primary.conf
 ```
 
 Each zone block is transformed:
+
 - `type secondary` → `type primary`
 - `primaries { ... };` directive is removed
 - All other directives are preserved as-is
@@ -85,14 +110,14 @@ bind-zone-sync restore --conf zones-secondary.conf --out zones-primary.conf \
 
 ## Command-Line Options
 
-| Option | Default | Description |
-|--------|---------|-------------|
-| `--conf` | `/usr/local/etc/namedb/zones-primary.conf.auto` | Input zone config file |
-| `--out` | `/usr/local/etc/namedb/zones-secondary.conf.auto` | Output zone config file |
-| `--primaries` | `10.0.0.100;` | Full content for the `primaries` directive (e.g., `"10.0.0.100;"`, `"10.0.0.100; 10.0.0.101;"`, `'10.0.0.100; key "mykey";'`) |
-| `--db-path-find` | `/usr/local/etc/namedb/primary/` | Path prefix in zone file paths to replace |
-| `--db-path-replace` | `""` | Replacement path prefix; empty = keep original paths |
-| `--log-level` | `INFO` | Logging level: `DEBUG`, `INFO`, `WARNING`, `ERROR`, `CRITICAL` |
+| Option              | Default                                           | Description                                                                                                                   |
+|---------------------|---------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------|
+| `--conf`            | `/usr/local/etc/namedb/zones-primary.conf.auto`   | Input zone config file                                                                                                        |
+| `--out`             | `/usr/local/etc/namedb/zones-secondary.conf.auto` | Output zone config file                                                                                                       |
+| `--primaries`       | `10.0.0.100;`                                     | Full content for the `primaries` directive (e.g., `"10.0.0.100;"`, `"10.0.0.100; 10.0.0.101;"`, `'10.0.0.100; key "mykey";'`) |
+| `--db-path-find`    | `/usr/local/etc/namedb/primary/`                  | Path prefix in zone file paths to replace                                                                                     |
+| `--db-path-replace` | `""`                                              | Replacement path prefix; empty = keep original paths                                                                          |
+| `--log-level`       | `INFO`                                            | Logging level: `DEBUG`, `INFO`, `WARNING`, `ERROR`, `CRITICAL`                                                                |
 
 ## Excluded Zones
 
@@ -140,7 +165,8 @@ zone "app1.example.net" {
 };
 ```
 
-The `directory` directive is preserved, and the relative file path `"app1.example.net.db"` stays relative instead of being expanded to an absolute path.
+The `directory` directive is preserved, and the relative file path `"app1.example.net.db"` stays relative instead of being
+expanded to an absolute path.
 
 ### Example
 
