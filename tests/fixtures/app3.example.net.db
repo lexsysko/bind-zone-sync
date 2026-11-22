@@ -1,0 +1,10 @@
+app3.example.net.  IN  SOA  ns1.app3.example.net. admin.app3.example.net. (
+            2024010301  ; serial
+            3600        ; refresh
+            900         ; retry
+            604800      ; expire
+            86400 )     ; minimum
+
+app3.example.net.  IN  NS  ns1.app3.example.net.
+ns1                IN  A   10.0.2.1
+app3.example.net.  IN  A   10.0.2.10

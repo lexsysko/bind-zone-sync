@@ -1,0 +1,11 @@
+$ORIGIN app2.example.net.
+@   IN  SOA  ns1.app2.example.net. admin.app2.example.net. (
+            2024010201  ; serial
+            3600        ; refresh
+            900         ; retry
+            604800      ; expire
+            86400 )     ; minimum
+
+@       IN  NS  ns1.app2.example.net.
+ns1     IN  A   10.0.1.1
+@       IN  A   10.0.1.10
