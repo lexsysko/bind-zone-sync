@@ -1,0 +1,18 @@
+zone "0/24.6.0.10.in-addr.arpa" {
+    type primary;
+    allow-query { any; };
+    file "/usr/local/etc/namedb/primary/10.0.6.0_24_reverse.db";
+};
+
+zone "app1.example.net" {
+    type primary;
+    allow-query { any; };
+    file "/usr/local/etc/namedb/primary/app1.example.net.db";
+};
+
+zone "app2.example.net" {
+    type primary;
+    allow-query { any; };
+    file "/usr/local/etc/namedb/primary/app2.example.net.db";
+};
+

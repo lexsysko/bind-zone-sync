@@ -1,0 +1,21 @@
+zone "0/24.6.0.10.in-addr.arpa" {
+    type secondary;
+    primaries { 10.0.0.100; };
+    allow-query { any; };
+    file "/usr/local/etc/namedb/secondary/10.0.6.0_24_reverse.db";
+};
+
+zone "app1.example.net" {
+    type secondary;
+    primaries { 10.0.0.100; };
+    allow-query { any; };
+    file "/usr/local/etc/namedb/secondary/app1.example.net.db";
+};
+
+zone "app2.example.net" {
+    type secondary;
+    primaries { 10.0.0.100; };
+    allow-query { any; };
+    file "/usr/local/etc/namedb/secondary/app2.example.net.db";
+};
+
