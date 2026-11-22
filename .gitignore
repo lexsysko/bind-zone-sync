@@ -1,0 +1,5 @@
+.
+.idea/
+/dist/
+*.conf
+!tests/fixtures/*.conf
